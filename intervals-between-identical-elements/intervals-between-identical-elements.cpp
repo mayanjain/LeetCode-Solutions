@@ -1,27 +1,19 @@
 class Solution {
 public:
     vector<long long> getDistances(vector<int>& arr) {
-        unordered_map<int,int> count;
-        unordered_map<int,int> last;
-        vector<long long> ans(arr.size());
-        for(int i=0 ; i<arr.size() ; i++){
-            if(last.count(arr[i])){
-                ans[i]=ans[last[arr[i]]]+(i-last[arr[i]])*count[arr[i]];
+        unordered_map<int,vector<int>> mp;
+        vector<long long> pre(arr.size()),suf(arr.size());
+        for(int i=0 ; i<arr.size() ; i++)mp[arr[i]].push_back(i);
+        for(auto& k:mp){
+            auto p=k.second;
+            for(int i=1 ; i<p.size() ; i++){
+                pre[p[i]]=pre[p[i-1]]+i*(p[i]-p[i-1]);
             }
-            last[arr[i]]=i;
-            count[arr[i]]++;
-        }
-        count.clear();
-        last.clear();
-        vector<long long> ans2(arr.size());
-        for(int i=arr.size()-1 ; i>=0 ; i--){
-            if(last.count(arr[i])){
-                ans2[i]=ans2[last[arr[i]]]+(last[arr[i]]-i)*count[arr[i]];
-                ans[i]+=ans2[i];
+            for(int i=p.size()-2 ; i>=0 ; i--){
+                suf[p[i]]=suf[p[i+1]]+(p.size()-i-1)*(p[i+1]-p[i]);
+                pre[p[i]]+=suf[p[i]];
             }
-            last[arr[i]]=i;
-            count[arr[i]]++;
         }
-        return ans;
+        return pre;
     }
 };
