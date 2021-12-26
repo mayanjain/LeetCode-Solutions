@@ -3,14 +3,14 @@ public:
     vector<int> recoverArray(vector<int>& nums) {
         set<int> st;
         sort(nums.begin(),nums.end());
-        unordered_map<int,int> cnt;
+        map<int,int> cnt;
         for(auto& i:nums)cnt[i]++;
         for(int i=1 ; i<nums.size() ; i++){
             if(nums[i]==nums[0])continue;
             if((nums[i]-nums[0])%2==0)st.insert(nums[i]-nums[0]);
         }
         vector<int> ans;
-        unordered_map<int,int> mp;
+        map<int,int> mp;
         for(auto& dif:st){
             mp=cnt;
             for(auto& i:nums){
