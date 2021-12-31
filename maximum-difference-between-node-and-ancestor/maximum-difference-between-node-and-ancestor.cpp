@@ -11,16 +11,10 @@
  */
 class Solution {
 public:
-    int ans=0;
-    int maxAncestorDiff(TreeNode* root,int mx=-1,int mn=-1) {
-        if(!root)return 0;
-        if(mx==-1)mx=root->val;
-        if(mn==-1)mn=root->val;
-        ans=max(ans,max(abs(root->val-mx),abs(root->val-mn)));
-        mx=max(mx,root->val);
-        mn=min(mn,root->val);
-        maxAncestorDiff(root->left,mx,mn);
-        maxAncestorDiff(root->right,mx,mn);
-        return ans;
+    int maxAncestorDiff(TreeNode* root,int mx=0,int mn=1e5+1) {
+        if(!root)return mx-mn;
+        mx=max(root->val,mx);
+        mn=min(root->val,mn);
+        return max(maxAncestorDiff(root->left,mx,mn),maxAncestorDiff(root->right,mx,mn));
     }
 };
