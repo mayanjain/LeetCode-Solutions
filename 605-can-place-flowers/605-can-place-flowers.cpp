@@ -14,6 +14,7 @@ public:
                 }
                 else ls=0;
             }
+            if(!ls && !n)break;
         }
         return n<=0;
     }
