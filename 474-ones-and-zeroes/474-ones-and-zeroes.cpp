@@ -1,19 +1,21 @@
 class Solution {
 public:
-    int mp[601][101][101];
-    int findMaxForm(vector<string>& strs, int m, int n,int c=0) {
-        if(c==strs.size() || (m==0 && n==0))return 0;
-        if(mp[c][m][n]){
-            return mp[c][m][n];
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int len=strs.size();
+        int dp[len+1][m+1][n+1];
+        memset(dp,0,sizeof dp);
+        for(int i=1 ; i<=len ; i++){
+            int zero=count(strs[i-1].begin(),strs[i-1].end(),'0');
+            int one=strs[i-1].size()-zero;
+            for(int j=0 ; j<=m ; j++){
+                for(int k=0 ; k<=n ; k++){
+                    dp[i][j][k]=dp[i-1][j][k];
+                    if(zero<=j && one<=k){
+                        dp[i][j][k]=max(dp[i][j][k],dp[i-1][j-zero][k-one]+1);
+                    }
+                }
+            }
         }
-        int one=0,zero;
-        for(auto& i:strs[c])if(i=='1')one++;
-        zero=strs[c].size()-one;
-        int ans=0;
-        if(one<=n && zero<=m){
-            ans=1+findMaxForm(strs,m-zero,n-one,c+1);
-        }
-        ans=max(ans,findMaxForm(strs,m,n,c+1));
-        return mp[c][m][n]=ans;
+        return dp[len][m][n];
     }
 };
