@@ -2,10 +2,12 @@ class Solution {
 public:
     bool winnerSquareGame(int n) {
         vector<bool> dp(n+1);
-        for(int i=0 ; i<=n ; i++){
-            if(dp[i])continue;
-            for(int j= 1; i+j*j<=n ; j++){
-                dp[i+j*j]=true;
+        for(int i=1 ; i<=n ; i++){
+            for(int j = 1; j*j<=i ; j++){
+                if(!dp[i-j*j]){
+                    dp[i]=1;
+                    break;
+                }
             }
         }
         return dp[n];
