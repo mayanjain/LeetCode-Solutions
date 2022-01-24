@@ -1,8 +1,7 @@
 class Solution {
 public:
     vector<int> findLonely(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        map<int,int> mp;
+        unordered_map<int,int> mp;
         for(auto& i:nums)mp[i]++;
         vector<int> ans;
         for(auto& i:mp){
