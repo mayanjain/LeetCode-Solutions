@@ -11,19 +11,31 @@
  */
 class Solution {
 public:
-    vector<int> ans;
-    
-    void solve(TreeNode* root){
-        if(!root)return;
-        solve(root->left);
-        ans.push_back(root->val);
-        solve(root->right);
-    }
-    
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
-        solve(root1);
-        solve(root2);
-        sort(ans.begin(),ans.end());
+        vector<int> ans;
+        stack<TreeNode*> st1,st2;
+        while(st1.size() || st2.size() || root1 || root2){
+            while(root1){
+                st1.push(root1);
+                root1=root1->left;
+            }
+            while(root2){
+                st2.push(root2);
+                root2=root2->left;
+            }
+            if(!st2.size() || (st1.size() && st1.top()->val<=st2.top()->val)){
+                root1=st1.top();
+                st1.pop();
+                ans.push_back(root1->val);
+                root1=root1->right;
+            }
+            else{
+                root2=st2.top();
+                st2.pop();
+                ans.push_back(root2->val);
+                root2=root2->right;
+            }
+        }
         return ans;
     }
 };
