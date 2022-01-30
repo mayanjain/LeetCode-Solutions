@@ -1,25 +1,22 @@
 class Solution {
 public:
     vector<int> maxScoreIndices(vector<int>& nums) {
-        vector<int> one(nums.size());
-        auto zero=one;
+        int one=0,zero=0;
+        for(auto& i:nums){
+            if(i)one++;
+        }
+        int score=one,cur;
+        vector<int> ans(1);
         for(int i=0 ; i<nums.size() ; i++){
-            if(nums[i])one[i]++;
-            else zero[i]++;
-            if(i){
-                one[i]+=one[i-1];
-                zero[i]+=zero[i-1];
+            if(nums[i]==0)zero++;
+            else one--;
+            cur=zero+one;
+            if(cur>score){
+                ans={i+1};
+                score=cur;
             }
+            else if(cur==score)ans.push_back(i+1);
         }
-        int ans=one[nums.size()-1];
-        for(int i=0 ; i<nums.size() ; i++){
-            ans=max(ans,one[nums.size()-1]-one[i]+zero[i]);
-        }
-        vector<int> res;
-        if(ans==one[nums.size()-1])res.push_back(0);
-        for(int i=0 ; i<nums.size() ; i++){
-            if(one[nums.size()-1]-one[i]+zero[i]==ans)res.push_back(i+1);
-        }
-        return res;
+        return ans;
     }
 };
