@@ -6,6 +6,7 @@ public:
         vector<vector<int>> ans;
         int n=nums.size();
         for(int i=0 ; i<n ; i++){
+            if(i && nums[i]==nums[i-1])continue;
             for(int j=i+1 ; j<n-2 ; j++){
                 int req=target-(nums[i]+nums[j]);
                 int k=j+1;
