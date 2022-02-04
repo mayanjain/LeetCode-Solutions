@@ -8,6 +8,7 @@ public:
         for(int i=0 ; i<n ; i++){
             if(i && nums[i]==nums[i-1])continue;
             for(int j=i+1 ; j<n-2 ; j++){
+                if(j>i+1 && nums[j]==nums[j-1])continue;
                 int req=target-(nums[i]+nums[j]);
                 int k=j+1;
                 for(int f=n-1 ; f>k ; f--){
