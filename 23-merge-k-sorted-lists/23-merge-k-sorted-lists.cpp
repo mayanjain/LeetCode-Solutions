@@ -14,16 +14,12 @@ public:
     ListNode* solve(ListNode* l1,ListNode* l2){
         if(!l1)return l2;
         if(!l2)return l1;
-        ListNode* root=new ListNode();
         if(l1->val<l2->val){
-            root->val=l1->val;
-            root->next=solve(l1->next,l2);
+            l1->next=solve(l1->next,l2);
+            return l1;
         }
-        else{
-            root->val=l2->val;
-            root->next=solve(l2->next,l1);
-        }
-        return root;
+        l2->next=solve(l2->next,l1);
+        return l2;
     }
     
     ListNode* mergeKLists(vector<ListNode*>& lists) {
