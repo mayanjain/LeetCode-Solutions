@@ -1,10 +1,10 @@
 class FreqStack {
 public:
     unordered_map<int,int> count;
-    map<int,vector<int>> freq;
+    vector<vector<int>> freq;
     int mx=0;
     FreqStack() {
-        
+        freq.resize(2*1e4+5);
     }
     
     void push(int val) {
@@ -15,8 +15,8 @@ public:
     int pop() {
         auto ans=freq[mx].back();
         freq[mx].pop_back();
+        if(freq[mx].size()==0)mx--;
         count[ans]--;
-        if(!freq[mx].size())freq.erase(mx),mx--;
         return ans;
     }
 };
