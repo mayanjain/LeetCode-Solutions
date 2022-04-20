@@ -12,27 +12,25 @@
 class BSTIterator {
 public:
     stack<TreeNode*> stk;
+    TreeNode* visit;
     
     BSTIterator(TreeNode* root) {
-        stk.push(root);
+        visit=root;
     }
     
     int next() {
-        auto it=stk.top();
-        // cout<<it->val<<" ";
-        while(it->left!=NULL){
-            auto kt=it->left;
-            it->left=NULL;
-            stk.push(kt);
-            it=kt;
+        while(visit){
+            stk.push(visit);
+            visit=visit->left;
         }
+        auto it=stk.top();
         stk.pop();
-        if(it->right)stk.push(it->right);
+        visit=it->right;
         return it->val;
     }
     
     bool hasNext() {
-        return stk.size();
+        return visit||stk.size();
     }
 };
 
