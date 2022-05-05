@@ -8,30 +8,20 @@ public:
     
     void push(int x) {
         q.push(x);
+        for(int i=1 ; i<q.size() ; i++){
+            q.push(q.front());
+            q.pop();
+        }
     }
     
     int pop() {
-        queue<int> f;
-        while(q.size()>1){
-            f.push(q.front());
-            q.pop();
-        }
-        int ans=q.front();
+        int x=q.front();
         q.pop();
-        swap(q,f);
-        return ans;
+        return x;
     }
     
     int top() {
-        queue<int> f;
-        while(q.size()>1){
-            f.push(q.front());
-            q.pop();
-        }
-        int ans=q.front();
-        f.push(ans);
-        swap(q,f);
-        return ans;
+        return q.front();
     }
     
     bool empty() {
