@@ -3,21 +3,22 @@ public:
     vector<vector<int>> ans;
     
     void solve(vector<int>& nums,int i){
-        if(i==nums.size()){
+        if(i+1==nums.size()){
             ans.push_back(nums);
             return;
         }
-        set<int> st;
         for(int j=i ; j<nums.size() ; j++){
-            if(st.count(nums[j]))continue;
-            swap(nums[i],nums[j]);
+            if(j>i && nums[i]==nums[j])continue;
+            swap(nums[j],nums[i]);
             solve(nums,i+1);
-            swap(nums[i],nums[j]);
-            st.insert(nums[j]);
+        }
+        for(int j=nums.size()-1 ; j>i ; j--){
+            swap(nums[j],nums[i]);
         }
     }
     
     vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
         solve(nums,0);
         return ans;
     }
