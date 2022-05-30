@@ -6,11 +6,13 @@ public:
             mp[i]++;
         }
         map<int,multiset<string>> freq;
+        int mx=0;
         for(auto& i:mp){
             freq[i.second].insert(i.first);
+            mx=max(i.second,mx);
         }
         vector<string> v;
-        for(int i=500 ; i>=0 && k ; i--){
+        for(int i=mx ; i>=0 && k ; i--){
             if(freq.count(i)){
                 while(freq[i].size() && k){
                     k--;
