@@ -3,7 +3,7 @@ public:
     
     bool hasAllCodes(string s, int k) {
         string cur="";
-        set<string> st;
+        unordered_set<string> st;
         for(int i=0 ; i<s.size() ; i++){
             cur.push_back(s[i]);
             if(i>=k-1){
