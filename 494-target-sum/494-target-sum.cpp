@@ -1,19 +1,23 @@
 class Solution {
 public:
-    
-    int solve(vector<int>& nums,int pos,int target,vector<vector<int>>& mp){
-        if(pos==nums.size()){
-            return !target;
-        }
-        if(mp[pos][target+3000]!=-1)return mp[pos][target+3000];
-        int ans=0;
-        ans+=solve(nums,pos+1,target-nums[pos],mp);
-        ans+=solve(nums,pos+1,target+nums[pos],mp);
-        return mp[pos][target+3000]=ans;        
-    }
-    
     int findTargetSumWays(vector<int>& nums, int target) {
-        vector<vector<int>> mp(21,vector<int>(7005,-1));
-        return solve(nums,0,target,mp);        
+        int sum=0;
+        for(auto& i:nums)sum+=i;
+        target=abs(target);
+        if((sum+target)%2 || target>sum)return 0;
+        sum+=target;
+        sum/=2;
+        vector<vector<int>> dp(nums.size()+1,vector<int>(sum+1));
+        for(int i=0 ; i<=nums.size() ; i++)dp[i][0]=1;
+        int ans=0;
+        for(int i=1 ; i<dp.size() ; i++){
+            for(int j=0 ; j<=sum ; j++){
+                if(nums[i-1]<=j){
+                    dp[i][j]=dp[i-1][j]+dp[i-1][j-nums[i-1]];
+                }
+                else dp[i][j]=dp[i-1][j];
+            }
+        }
+        return dp[nums.size()][sum];
     }
 };
