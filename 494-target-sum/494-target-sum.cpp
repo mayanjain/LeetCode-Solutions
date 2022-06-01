@@ -1,18 +1,19 @@
 class Solution {
 public:
-    int ans=0;
+    map<pair<int,int>,int> mp;
     
-    void solve(vector<int>& nums,int pos,int target){
+    int solve(vector<int>& nums,int pos,int target){
         if(pos==nums.size()){
-            if(!target)ans++;
-            return;
+            return !target;
         }
-        solve(nums,pos+1,target-nums[pos]);
-        solve(nums,pos+1,target+nums[pos]);
+        if(mp.count({pos,target}))return mp[{pos,target}];
+        int ans=0;
+        ans+=solve(nums,pos+1,target-nums[pos]);
+        ans+=solve(nums,pos+1,target+nums[pos]);
+        return mp[{pos,target}]=ans;        
     }
     
     int findTargetSumWays(vector<int>& nums, int target) {
-        solve(nums,0,target);
-        return ans;
+        return solve(nums,0,target);        
     }
 };
