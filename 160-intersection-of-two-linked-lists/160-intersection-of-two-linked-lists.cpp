@@ -8,15 +8,25 @@
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        set<ListNode*> st;
-        while(headA){
-            st.insert(headA);
-            headA=headA->next;
+    ListNode *getIntersectionNode(ListNode *h1, ListNode *h2) {
+        int sa=0,sb=0;
+        auto p1=h1,p2=h2;
+        while(p1){
+            sa++;
+            p1=p1->next;
         }
-        while(headB){
-            if(st.count(headB))return headB;
-            headB=headB->next;
+        while(p2){
+            sb++;
+            p2=p2->next;
+        }
+        if(sa<sb)swap(h1,h2);
+        p1=h1,p2=h2;
+        auto cur=abs(sa-sb);
+        while(p1){
+            if(p1==p2)return p1;
+            p1=p1->next;
+            if(cur<=0)p2=p2->next;
+            cur--;
         }
         return NULL;
     }
