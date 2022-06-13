@@ -1,16 +1,18 @@
 class Solution {
 public:
-    vector<vector<int>> dp;
-    
-    int solve(vector<vector<int>>& triangle,int row,int col){
-        if(row==triangle.size())return 0;
-        if(dp[row][col]!=-1)return dp[row][col];
-        return dp[row][col]= min(solve(triangle,row+1,col),solve(triangle,row+1,col+1))+triangle[row][col];
-    }
-    
-    int minimumTotal(vector<vector<int>>& triangle) {
-        int n=triangle.size();
-        dp=vector<vector<int>> (n,vector<int>(n,-1));
-        return solve(triangle,0,0);
+    int minimumTotal(vector<vector<int>>& t) {
+        vector<int> dp(t.size(),1e7);
+        dp[0]=t[0][0];
+        for(int i=1 ; i<t.size() ; i++){
+            for(int j=i; j>=0 ; j--){
+                if(j){
+                    dp[j]=min(dp[j],dp[j-1])+t[i][j];
+                }
+                else dp[j]+=t[i][j];
+            }
+        }
+        int ans=INT_MAX;
+        for(auto& i:dp)ans=min(ans,i);
+        return ans;
     }
 };
