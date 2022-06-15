@@ -17,7 +17,8 @@ public:
         int n=words.size(),ans=0;
         vector<int> dp(n,1);
         for(int i=0 ; i<n ; i++){
-            for(int j=0 ; j<i ; j++){
+            for(int j=i-1 ; j>=0 ; j--){
+                if(words[j].size()+1<words[i].size())break;
                 if(pred(words[i],words[j])){
                     dp[i]=max(dp[j]+1,dp[i]);
                 }
