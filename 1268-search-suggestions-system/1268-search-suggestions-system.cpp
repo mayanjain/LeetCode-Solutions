@@ -4,7 +4,7 @@ public:
         int n=s.size();
         vector<vector<string>> ans(n);
         string cur="";
-        set<string> p,er;
+        unordered_set<string> p,er;
         priority_queue<string> pq;
         for(auto& i:products)p.insert(i);
         for(int i=0 ; i<n ; i++){
