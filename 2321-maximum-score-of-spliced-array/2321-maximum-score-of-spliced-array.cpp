@@ -12,9 +12,9 @@ public:
     
     int maximumsSplicedArray(vector<int>& nums1, vector<int>& nums2) {
         dp=vector<vector<int>>(nums1.size(),vector<int>(3));
-        int cur=max(solve(nums1,nums2,0,0),solve(nums1,nums2,0,1));
+        int cur=solve(nums1,nums2,0,0);
         dp=vector<vector<int>>(nums1.size(),vector<int>(3));
-        int cur2=max(solve(nums2,nums1,0,0),solve(nums2,nums1,0,1));
+        int cur2=solve(nums2,nums1,0,0);
         return max(cur,cur2);
     }
 };
