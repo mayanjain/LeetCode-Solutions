@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool solve(vector<vector<int>>& v,int cur,set<int>& st,vector<bool>& done){
+    bool solve(vector<vector<int>>& v,int cur,unordered_set<int>& st,vector<bool>& done){
         if(done[cur])return true;
         if(st.count(cur))return false;
         st.insert(cur);
@@ -18,7 +18,7 @@ public:
         }
         vector<bool> done(total);
         for(int i=0 ; i<total ; i++){
-            set<int> st;
+            unordered_set<int> st;
             if(!solve(v,i,st,done))return false;
         }
         return true;
