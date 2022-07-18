@@ -1,20 +1,25 @@
 class Solution {
 public:
-    bool dfs(int cur,int col,vector<int>& v,vector<vector<int>>& graph){
-        v[cur]=col;
-        for(auto& i:graph[cur]){
-            if(v[i]==-1){
-                if(!dfs(i,col^1,v,graph))return false;
-            }
-            else if(v[i]==col)return false;
-        }
-        return true;
-    }
     
     bool isBipartite(vector<vector<int>>& graph) {
-        vector<int> v(graph.size()+1,-1);
+        vector<int> col(graph.size());
         for(int i=0 ; i<graph.size() ; i++){
-            if(v[i]==-1 && !dfs(i,1,v,graph))return false;
+            if(col[i])continue;
+            queue<int> q;
+            q.push(i);
+            col[i]=1;
+            while(q.size()){
+                for(int i=q.size() ; i>0 ; i--){
+                    auto cur=q.front();
+                    q.pop();
+                    for(auto& v:graph[cur]){
+                        if(col[v]==col[cur])return false;
+                        if(col[v])continue;
+                        col[v]=col[cur]==1?2:1;
+                        q.push(v);
+                    }
+                }
+            }
         }
         return true;
     }
