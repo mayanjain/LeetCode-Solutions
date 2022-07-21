@@ -28,6 +28,8 @@ public:
             third->next=prev->next;
             prev->next=third;
         }
-        return dummy->next;
+        auto res=dummy->next;
+        delete(dummy);
+        return res;
     }
 };
