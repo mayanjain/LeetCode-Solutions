@@ -11,23 +11,21 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        vector<int> v;
-        int k=0,z=0;
+        auto beforeNode=new ListNode(0),afterNode=new ListNode(0);
+        auto before=beforeNode,after=afterNode;
         while(head){
-            if(head->val<x)k++;
-            v.push_back(head->val);
+            if(head->val<x){
+                before->next=head;
+                before=before->next;
+            }
+            else{
+                after->next=head;
+                after=after->next;
+            }
             head=head->next;
         }
-        vector<int> res(v.size());
-        for(auto& i:v){
-            if(i<x)res[z++]=i;
-            else res[k++]=i;
-        }
-        ListNode* ans=new ListNode(0),*ptr=ans;
-        for(auto& i:res){
-            ans->next=new ListNode(i);
-            ans=ans->next;
-        }
-        return ptr->next;
+        after->next=NULL;
+        before->next=afterNode->next;
+        return beforeNode->next;
     }
 };
