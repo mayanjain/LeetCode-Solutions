@@ -1,11 +1,11 @@
-#include <type_traits>
-bool cmp(pair<string,int> a, pair<string,int> b) { return a.second!=b.second?a.second>b.second:a.first<b.first;};
-using Cmp = std::integral_constant<decltype(&cmp), &cmp>;
 class FoodRatings {
-    static bool cmp(pair<string,int> a, pair<string,int> b) { return a.second!=b.second?a.second>b.second:a.first<b.first;};
+    struct cmp {
+        bool operator() (pair<string,int> a, pair<string,int> b) const {
+            return a.second!=b.second?a.second>b.second:a.first<b.first;
+        }
+    };
     
-    
-    map<string,set<pair<string,int>,Cmp>> menu;
+    map<string,set<pair<string,int>,cmp>> menu;
     map<string,string> type;
     map<string,int> rate;
     
