@@ -9,18 +9,10 @@
  */
 class Solution {
 public:
-    TreeNode* ans=NULL;
-    
-    bool lca(TreeNode* root,TreeNode* p,TreeNode* q){
-        if(!root)return false;
-        auto left=lca(root->left,p,q),right=lca(root->right,p,q);
-        if(left && right && !ans)ans=root;
-        else if((left || right) && (root==q || root==p))ans=root;
-        return (left||right||root==p||root==q);
-    }
-    
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        lca(root,p,q);
-        return ans;
+        if(!root)return root;
+        auto left=lowestCommonAncestor(root->left,p,q),right=lowestCommonAncestor(root->right,p,q);
+        if((left && right) || (root->val==p->val || root->val==q->val))return root;
+        return left?left:right;
     }
 };
