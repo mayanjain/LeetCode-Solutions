@@ -2,12 +2,10 @@ class Solution {
 public:
     int arithmeticTriplets(vector<int>& nums, int diff) {
         int ans=0,n=nums.size();
-        for(int i=0 ; i<n ; i++){
-            for(int j=i+1 ; j<n ; j++){
-                for(int k=j+1; k<n ; k++){
-                    if(nums[j]-nums[i]==nums[k]-nums[j] && nums[k]-nums[j]==diff)ans++;
-                }
-            }
+        unordered_set<int> st;
+        for(auto& i:nums)st.insert(i);
+        for(auto& i:nums){
+            if(st.count(i+diff) && st.count(i+2*diff))ans++;
         }
         return ans;
     }
