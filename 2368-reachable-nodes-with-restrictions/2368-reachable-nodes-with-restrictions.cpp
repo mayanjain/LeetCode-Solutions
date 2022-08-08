@@ -1,27 +1,24 @@
 class Solution {
 public:
+    int count=0;
+    
+    void dfs(vector<set<int>>& v,int cur,set<int>& rest){
+        if(rest.count(cur))return;
+        count++;
+        for(auto& i:v[cur]){
+            v[i].erase(cur);
+            dfs(v,i,rest);
+        }
+    }
+    
     int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
-        vector<vector<int>> v(n);
+        vector<set<int>> v(n);
         for(auto& i:edges){
-            v[i[0]].push_back(i[1]);
-            v[i[1]].push_back(i[0]);
+            v[i[0]].insert(i[1]);
+            v[i[1]].insert(i[0]);
         }
-        queue<int> q;
-        q.push(0);
-        set<int> vis,rest;
-        for(auto& i:restricted)rest.insert(i);
-        vis.insert(0);
-        while(q.size()){
-            for(int i=q.size() ; i>0 ; i--){
-                auto cur=q.front();
-                q.pop();
-                for(auto& j:v[cur]){
-                    if(rest.count(j) || vis.count(j))continue;
-                    q.push(j);
-                    vis.insert(j);
-                }
-            }
-        }
-        return vis.size();
+        set<int> rest(restricted.begin(),restricted.end());
+        dfs(v,0,rest);
+        return count;
     }
 };
