@@ -1,12 +1,12 @@
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
-        map<string,int> st;
+        unordered_map<string,int> st;
         vector<int> ans;
         int n=words.size(),m=words[0].size();
         for(auto& i:words)st[i]++;
         for(int i=0 ; i+n*m<=s.size() ; i++){
-            map<string,int> ct;
+            unordered_map<string,int> ct;
             for(int j=i ; j<s.size() ; j+=m){
                 string cur=s.substr(j,m);
                 if(st.count(cur)&& st[cur]>ct[cur]){
