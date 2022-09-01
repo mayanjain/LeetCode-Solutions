@@ -1,21 +1,14 @@
 class Solution {
 public:
-    vector<vector<int>> dp;
-    
-    int solve(string& s,int i,char last,int k){
-        int n=s.size();
-        if(n==i)return 0;
-        if(dp[i][last-'a']!=-1)return dp[i][last-'a'];
-        int ans=solve(s,i+1,last,k);
-        if(abs(last-s[i])<=k)ans=max(ans,1+solve(s,i+1,s[i],k));
-        return dp[i][last-'a']=ans;
-    }
-    
     int longestIdealString(string s, int k) {
-        dp=vector<vector<int>>(s.size(),vector<int>(26,-1));
+        map<char,int> mp;
         int ans=0;
         for(int i=0 ; i<s.size() ; i++){
-            ans=max(ans,solve(s,i,s[i],k));
+            mp[s[i]]++;
+            for(char j='a' ; j<='z' ; j++){
+                if(abs(s[i]-j)<=k && s[i]!=j)mp[s[i]]=max(mp[s[i]],mp[j]+1);
+            }
+            ans=max(ans,mp[s[i]]);
         }
         return ans;
     }
