@@ -13,19 +13,24 @@ class Solution {
 public:
     int ans=0;
     
-    void solve(TreeNode* root,set<int> st){
-        if(st.count(root->val))st.erase(root->val);
-        else st.insert(root->val);
+    void solve(TreeNode* root,map<int,int>& mp){
+        mp[root->val]++;
         if(!root->left && !root->right){
-            ans+=st.size()<2;
+            int x=0;
+            for(auto& i:mp){
+                x+=i.second%2;
+            }
+            ans+=x<2;
+            mp[root->val]--;
             return;
         }
-        if(root->left)solve(root->left,st);
-        if(root->right)solve(root->right,st);
+        if(root->left)solve(root->left,mp);
+        if(root->right)solve(root->right,mp);
+        mp[root->val]--;
     }
     
     int pseudoPalindromicPaths (TreeNode* root) {
-        set<int> st;
+        map<int,int> st;
         solve(root,st);
         return ans;
     }
